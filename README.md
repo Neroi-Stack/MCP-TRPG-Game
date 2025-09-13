@@ -2,6 +2,13 @@
 
 An advanced TRPG (Tabletop Role-Playing Game) server designed for automated, AI-driven adventures. This project leverages Large Language Models (LLMs) as the Keeper (KP), allowing the AI to lead, narrate, and manage the game, making every session dynamic and immersive.
 
+## 🎮 Demo Video
+
+<video width="600" height="400" controls>
+    <source src=".readme/TRPG-demo.mp4" type="video/mp4">
+</video>
+
+
 ## Key Features
 
 - **LLM as Keeper (KP):**
