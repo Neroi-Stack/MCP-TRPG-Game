@@ -1,0 +1,90 @@
+Type,Description,Weight,CultureTag,GenderRestriction,OccupationTags,AgeGroup,IsActive,DisplayOrder
+Name,艾莉絲·坎貝爾,1,Western,F,,,True,1
+Name,約瑟夫·史密斯,1,Western,M,,,True,2
+Name,瑪莉·約翰遜,1,Western,F,,,True,3
+Name,威廉·布朗,1,Western,M,,,True,4
+Name,莎拉·戴維斯,1,Western,F,,,True,5
+Name,麥可·米勒,1,Western,M,,,True,6
+Name,艾瑪·威廉斯,1,Western,F,,,True,7
+Name,詹姆斯·強森,1,Western,M,,,True,8
+Name,伊莉莎白·安德森,1,Western,F,,,True,9
+Name,羅伯特·李,1,Western,M,,,True,10
+Name,亞歷克斯·馬丁,1,Western,M,,,True,11
+Name,凱薩琳·泰勒,1,Western,F,,,True,12
+Name,湯瑪斯·懷特,1,Western,M,,,True,13
+Name,蘇珊·哈里斯,1,Western,F,,,True,14
+Name,查爾斯·瓊斯,1,Western,M,,,True,15
+Name,珍妮佛·加西亞,1,Western,F,,,True,16
+Name,克里斯多夫·羅德里格茲,1,Western,M,,,True,17
+Name,阿曼達·劉易斯,1,Western,F,,,True,18
+Name,馬修·沃克,1,Western,M,,,True,19
+Name,勞拉·希爾,1,Western,F,,,True,20
+Name,大衛·亞當斯,1,Western,M,,,True,21
+Name,米歇爾·尼爾森,1,Western,F,,,True,22
+Birthplace,紐約,1,Western,,,,True,1
+Birthplace,洛杉磯,1,Western,,,,True,2
+Birthplace,芝加哥,1,Western,,,,True,3
+Birthplace,休士頓,1,Western,,,,True,4
+Birthplace,鳳凰城,1,Western,,,,True,5
+Birthplace,費城,1,Western,,,,True,6
+Birthplace,聖安東尼奧,1,Western,,,,True,7
+Birthplace,聖地牙哥,1,Western,,,,True,8
+Birthplace,達拉斯,1,Western,,,,True,9
+Birthplace,聖荷西,1,Western,,,,True,10
+Birthplace,奧斯汀,1,Western,,,,True,11
+Birthplace,傑克遜維爾,1,Western,,,,True,12
+Birthplace,舊金山,1,Western,,,,True,13
+Birthplace,哥倫布,1,Western,,,,True,14
+Birthplace,印第安納波利斯,1,Western,,,,True,15
+Birthplace,夏洛特,1,Western,,,,True,16
+Birthplace,西雅圖,1,Western,,,,True,17
+Birthplace,丹佛,1,Western,,,,True,18
+Birthplace,華盛頓,1,Western,,,,True,19
+Birthplace,波士頓,1,Western,,,,True,20
+Birthplace,埃爾帕索,1,Western,,,,True,21
+Birthplace,納什維爾,1,Western,,,,True,22
+Birthplace,底特律,1,Western,,,,True,23
+Birthplace,俄克拉荷馬城,1,Western,,,,True,24
+Birthplace,波特蘭,1,Western,,,,True,25
+Birthplace,拉斯維加斯,1,Western,,,,True,26
+Birthplace,孟菲斯,1,Western,,,,True,27
+ImportantPerson,我的母親 - 一個堅強而慈愛的女性，始終支持我的決定,1,Universal,,,,True,1
+ImportantPerson,我的父親 - 我的人生導師，教會我做人的道理,1,Universal,,,,True,2
+ImportantPerson,我的兄弟/姐妹 - 我們一起長大，彼此深深信任,1,Universal,,,,True,3
+ImportantPerson,我的老師 - 啟發了我的知識追求和人生目標,1,Universal,,,,True,4
+ImportantPerson,我的摯友 - 患難與共的夥伴，無話不談,1,Universal,,,,True,5
+ImportantPerson,我的導師 - 職業生涯的引路人和精神支柱,1,Universal,,,,True,6
+ImportantPerson,我的配偶 - 生命中最重要的伴侶,1,Universal,,,,True,7
+ImportantPerson,我的孩子 - 我生命的延續和希望,1,Universal,,,,True,8
+ImportantPerson,我的祖父/祖母 - 家族智慧的傳承者,1,Universal,,,,True,9
+ImportantPerson,我的同事 - 工作夥伴也是人生知己,1,Universal,,,,True,10
+Ideology,科學理性主義 - 相信一切都有合理解釋，堅持實證精神,1,Universal,,,,True,1
+Ideology,人道主義 - 致力於幫助他人，相信人性本善,1,Universal,,,,True,2
+Ideology,傳統家庭價值 - 家庭是一切的核心，血濃於水,1,Universal,,,,True,3
+Ideology,個人自由 - 每個人都應該自由選擇自己的人生道路,1,Universal,,,,True,4
+Ideology,社會正義 - 為弱勢族群發聲，追求平等公正,1,Universal,,,,True,5
+Ideology,知識求真 - 追求真理高於一切，學無止境,1,Universal,,,,True,6
+Ideology,宗教信仰 - 虔誠的信徒，從信仰中獲得力量,1,Universal,,,,True,7
+Ideology,愛國主義 - 熱愛祖國，願為國家犧牲,1,Universal,,,,True,8
+Ideology,環保主義 - 保護自然環境是我們的責任,1,Universal,,,,True,9
+Ideology,金錢至上 - 財富是成功的標準,1,Universal,,,,True,10
+SignificantLocation,童年時的家 - 承載著美好回憶的溫馨小屋,1,Universal,,,,True,1
+SignificantLocation,母校圖書館 - 知識的殿堂，求學時的庇護所,1,Universal,,,,True,2
+SignificantLocation,當地教堂 - 精神的避風港，心靈的寄託,1,Universal,,,,True,3
+SignificantLocation,城市公園 - 思考人生的寧靜角落,1,Universal,,,,True,4
+SignificantLocation,祖父母的農場 - 遠離塵囂的寧靜避世之地,1,Universal,,,,True,5
+SignificantLocation,工作場所 - 實現抱負和夢想的戰場,1,Universal,,,,True,6
+SignificantLocation,海邊懸崖 - 面朝大海，感受自然的壯闊,1,Universal,,,,True,7
+SignificantLocation,山中小屋 - 獨處沉思的秘密基地,1,Universal,,,,True,8
+SignificantLocation,老朋友的酒吧 - 分享喜怒哀樂的聚集地,1,Universal,,,,True,9
+SignificantLocation,藝術博物館 - 陶冶心靈的文化聖地,1,Universal,,,,True,10
+TreasuredPossession,祖父的懷錶 - 家族傳承的珍貴回憶，刻有家族銘文,1,Universal,,,,True,1
+TreasuredPossession,母親的項鍊 - 愛的象徵，在困難時給予力量,1,Universal,,,,True,2
+TreasuredPossession,獲獎證書 - 成就的見證，激勵自己不斷進步,1,Universal,,,,True,3
+TreasuredPossession,老照片 - 捕捉珍貴時光，定格美好回憶,1,Universal,,,,True,4
+TreasuredPossession,手寫日記 - 記錄人生歷程的私密筆記,1,Universal,,,,True,5
+TreasuredPossession,幸運飾品 - 給予勇氣的護身符,1,Universal,,,,True,6
+TreasuredPossession,珍藏書籍 - 啟發人生的智慧之書,1,Universal,,,,True,7
+TreasuredPossession,音樂盒 - 童年的禮物，承載純真歲月,1,Universal,,,,True,8
+TreasuredPossession,父親的工具 - 傳承的手藝和精神,1,Universal,,,,True,9
+TreasuredPossession,戰友的徽章 - 友誼和犧牲的象徵,1,Universal,,,,True,10
