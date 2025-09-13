@@ -48,7 +48,7 @@ An advanced TRPG (Tabletop Role-Playing Game) server designed for automated, AI-
 	- Example HTTP requests in `MCPTRPGGame.http` for quick API testing.
 
 - **Instant Game Start for Players:**
-  - Players can simply input "I want to start playing" to immediately begin a new TRPG adventure, with the LLM Keeper guiding the session from the start.
+  - Players can simply input "I want to start playing TRPG" to immediately begin a new TRPG adventure, with the LLM Keeper guiding the session from the start.
 
 - **Language Support:**
 	- Currently, the main supported language is Traditional Chinese (zh-TW).
