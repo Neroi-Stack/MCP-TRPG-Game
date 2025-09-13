@@ -4,7 +4,7 @@ An advanced **MCP (Model Context Protocol) powered** TRPG (Tabletop Role-Playing
 
 ## 🚀 What is MCP?
 
-**Model Context Protocol (MCP)** is a cutting-edge technology that enables AI models to interact with external tools and data sources in real-time. In MCPTRPGGame, MCP serves as the bridge between the AI and the game world, allowing the AI Keeper to:
+**Model Context Protocol (MCP)** is a technology that enables AI models to interact with external tools and data sources in real-time. In MCPTRPGGame, MCP serves as the bridge between the AI and the game world, allowing the AI Keeper to:
 
 - **Access game data dynamically** - Characters, scenarios, NPCs, and game state
 - **Execute game mechanics** - Dice rolls, skill checks, combat calculations
