@@ -11,7 +11,7 @@ An advanced **MCP (Model Context Protocol) powered** TRPG (Tabletop Role-Playing
 - **Modify game world** - Create events, update character stats, progress storylines
 - **Provide contextual responses** - Rich, data-driven narrative based on current game state
 
-This makes every gaming session truly adaptive and responsive to player actions!CP-TRPG-Game Server
+This makes every gaming session truly adaptive and responsive to player actions!
 
 An advanced TRPG (Tabletop Role-Playing Game) server designed for automated, AI-driven adventures. This project leverages Large Language Models (LLMs) as the Keeper (KP), allowing the AI to lead, narrate, and manage the game, making every session dynamic and immersive.
 
