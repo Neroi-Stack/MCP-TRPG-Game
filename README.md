@@ -32,7 +32,7 @@ https://github.com/user-attachments/assets/237294ee-6db8-4e5e-8d49-f028fc6b50d7
 	- Supports fully automated game sessions with intelligent event generation and story progression
 
 - **🛠️ Rich MCP Tool Integration:**
-	- 30+ specialized MCP tools for comprehensive game management
+	- 10+ specialized MCP tools for comprehensive game management
 	- Character creation, skill checks, combat assistance, and scenario management
 	- Dynamic NPC dialogue generation and scene description enhancement
 	- Automated game progress tracking and decision suggestions
