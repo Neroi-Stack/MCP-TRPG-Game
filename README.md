@@ -4,10 +4,7 @@ An advanced TRPG (Tabletop Role-Playing Game) server designed for automated, AI-
 
 ## 🎮 Demo Video
 
-<video width="600" height="400" controls>
-    <source src=".readme/TRPG-demo.mp4" type="video/mp4">
-</video>
-
+<video src=".readme/TRPG-demo.mp4" controls="controls" width="500" height="300"></video>
 
 ## Key Features
 
