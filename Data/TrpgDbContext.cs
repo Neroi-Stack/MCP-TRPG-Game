@@ -44,6 +44,15 @@ public class TrpgDbContext : DbContext
 
     // 系統表格
     public DbSet<RandomElement> RandomElements { get; set; }
+    
+    // KP輔助表格
+    public DbSet<NpcReaction> NpcReactions { get; set; }
+    public DbSet<SceneRollSuggestion> SceneRollSuggestions { get; set; }
+    public DbSet<ActionSuggestion> ActionSuggestions { get; set; }
+    
+    // 隨機事件系統
+    public DbSet<RandomEvent> RandomEvents { get; set; }
+    public DbSet<EventIntensity> EventIntensities { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

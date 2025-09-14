@@ -9,20 +9,68 @@ public class Coc7RulesService
 {
     private readonly Random _random = new();
 
-    /// <summary>
-    /// 擲 3d6 骰子
-    /// </summary>
-    public int Roll3d6()
+    public int Rolld4(int times)
     {
-        return _random.Next(1, 7) + _random.Next(1, 7) + _random.Next(1, 7);
+        int total = 0;
+        for (int i = 0; i < times; i++)
+        {
+            total += _random.Next(1, 5);
+        }
+        return total;
     }
 
-    /// <summary>
-    /// 擲 2d6 骰子
-    /// </summary>
-    public int Roll2d6()
+    public int Rolld6(int times)
     {
-        return _random.Next(1, 7) + _random.Next(1, 7);
+        int total = 0;
+        for (int i = 0; i < times; i++)
+        {
+            total += _random.Next(1, 7);
+        }
+        return total;
+    }
+
+    public int Rolld8(int times)
+    {
+        int total = 0;
+        for (int i = 0; i < times; i++)
+        {
+            total += _random.Next(1, 9);
+        }
+        return total;
+    }
+
+    public int Rolld12(int times)
+    {
+        int total = 0;
+        for (int i = 0; i < times; i++)
+        {
+            total += _random.Next(1, 13);
+        }
+        return total;
+    }
+
+    public int Rolld20(int times)
+    {
+        int total = 0;
+        for (int i = 0; i < times; i++)
+        {
+            total += _random.Next(1, 21);
+        }
+        return total;
+    }
+
+    public int Rolld100(int times)
+    {
+        int total = 0;
+        for (int i = 0; i < times; i++)
+        {
+            var tensdigits = _random.Next(0, 10);
+            var onesdigits = _random.Next(0, 10);
+            int result = tensdigits * 10 + onesdigits;
+            if (result == 0) result = 100;
+            total += result;
+        }
+        return total;
     }
 
     /// <summary>
@@ -31,19 +79,19 @@ public class Coc7RulesService
     public void GenerateRandomAttributes(PlayerCharacter character)
     {
         // STR, DEX, CON, APP, POW, SIZ = 3d6 × 5 (15-90)
-        character.Strength = Roll3d6() * 5;
-        character.Dexterity = Roll3d6() * 5;
-        character.Constitution = Roll3d6() * 5;
-        character.Appearance = Roll3d6() * 5;
-        character.Power = Roll3d6() * 5;
-        character.Size = Roll3d6() * 5;
+        character.Strength = Rolld6(3) * 5;
+        character.Dexterity = Rolld6(3) * 5;
+        character.Constitution = Rolld6(3) * 5;
+        character.Appearance = Rolld6(3) * 5;
+        character.Power = Rolld6(3) * 5;
+        character.Size = Rolld6(3) * 5;
 
         // INT, EDU = (2d6 + 6) × 5 (40-90)
-        character.Intelligence = (Roll2d6() + 6) * 5;
-        character.Education = (Roll2d6() + 6) * 5;
+        character.Intelligence = (Rolld6(2) + 6) * 5;
+        character.Education = (Rolld6(2) + 6) * 5;
 
         // 幸運值 = 3d6 × 5 (15-90)
-        character.Luck = Roll3d6() * 5;
+        character.Luck = Rolld6(3) * 5;
     }
 
     /// <summary>
@@ -59,8 +107,8 @@ public class Coc7RulesService
                 character.Size = Math.Max(character.Size - 5, 1);
                 character.Education = Math.Max(character.Education - 5, 1);
                 // 可進行兩次幸運檢定，取較高值
-                var luck1 = Roll3d6() * 5;
-                var luck2 = Roll3d6() * 5;
+                var luck1 = Rolld6(3) * 5;
+                var luck2 = Rolld6(3) * 5;
                 character.Luck = Math.Max(luck1, luck2);
                 break;
 
@@ -317,45 +365,8 @@ public class Coc7RulesService
         // 幸運值只在未設定時生成 (3d6 × 5)
         if (character.Luck == 0)
         {
-            character.Luck = Roll3d6() * 5;
+            character.Luck = Rolld6(3) * 5;
         }
         character.CurrentLuck = character.Luck;
-    }
-
-    /// <summary>
-    /// 擲骰子 - 支援複雜的骰子表達式
-    /// </summary>
-    public int RollDice(string diceExpression)
-    {
-        // 簡單的骰子解析，支援 "XdY" 和 "XdY+Z" 格式
-        diceExpression = diceExpression.ToLower().Replace(" ", "");
-
-        if (int.TryParse(diceExpression, out var fixedValue))
-            return fixedValue;
-
-        var parts = diceExpression.Split('d');
-        if (parts.Length != 2)
-            throw new ArgumentException($"無效的骰子表達式: {diceExpression}");
-
-        var diceCount = int.Parse(parts[0]);
-        var diceSides = parts[1];
-
-        var bonus = 0;
-        if (diceSides.Contains('+'))
-        {
-            var bonusParts = diceSides.Split('+');
-            diceSides = bonusParts[0];
-            bonus = int.Parse(bonusParts[1]);
-        }
-
-        var sides = int.Parse(diceSides);
-        var total = 0;
-
-        for (int i = 0; i < diceCount; i++)
-        {
-            total += _random.Next(1, sides + 1);
-        }
-
-        return total + bonus;
     }
 }

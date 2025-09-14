@@ -1,0 +1,4 @@
+Id,Key,DisplayName,MinDangerLevel,MaxDangerLevel,Description,DisplayOrder,IsActive,CreatedAt
+1,MILD,輕微,1,3,低強度的事件效果,1,true,2024-01-01 00:00:00
+2,MODERATE,明顯,4,6,中等強度的事件效果,2,true,2024-01-01 00:00:00
+3,STRONG,強烈,7,10,高強度的事件效果,3,true,2024-01-01 00:00:00

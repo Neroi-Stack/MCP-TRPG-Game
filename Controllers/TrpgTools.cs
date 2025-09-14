@@ -571,20 +571,20 @@ public static class TrpgTools
     }
 
     [McpServerTool, Description("生成隨機事件 (KP輔助)")]
-    public static string GenerateRandomEvent(string sceneType, int dangerLevel = 3)
+    public static Task<string> GenerateRandomEvent(string sceneType, int dangerLevel = 3)
     {
-        if (_serviceProvider == null) return "服務未初始化";
+        if (_serviceProvider == null) return Task.FromResult("服務未初始化");
 
         using var scope = _serviceProvider.CreateScope();
         var keeperService = scope.ServiceProvider.GetRequiredService<KeeperAssistantService>();
 
         try
         {
-            return keeperService.GenerateRandomEvent(sceneType, dangerLevel);
+            return keeperService.GenerateRandomEventAsync(sceneType, dangerLevel);
         }
         catch (Exception ex)
         {
-            return $"❌ 生成隨機事件失敗: {ex.Message}";
+            return Task.FromResult($"❌ 生成隨機事件失敗: {ex.Message}");
         }
     }
 
@@ -734,7 +734,8 @@ public static class TrpgTools
                 result += $"🎯 **主要專業技能**\n";
                 foreach (var skill in config.ProfessionalSkillPoints.Take(5))
                 {
-                    var totalValue = skill.Value + GetBaseSuccessRate(skill.Key);
+                    var baseRate = await GetBaseSuccessRateAsync(skill.Key);
+                    var totalValue = skill.Value + baseRate;
                     result += $"• {skill.Key}: {totalValue}%\n";
                 }
             }
@@ -905,199 +906,136 @@ public static class TrpgTools
     }
 
     [McpServerTool, Description("獲取場景檢定建議")]
-    public static string GetSceneRollSuggestions(string sceneName, string playerAction)
+    public static async Task<string> GetSceneRollSuggestions(string sceneName, string playerAction)
     {
-        var suggestions = new Dictionary<string, List<string>>
-        {
-            ["小鎮酒館"] = new()
-            {
-                "【快速交談】- 與酒館老闆交流，獲得布雷克伍德館傳聞",
-                "【聆聽】- 偷聽其他客人的對話",
-                "【心理學】- 判斷NPC是否隱瞒什麼",
-                "【魅惑】- 讓NPC更願意分享資訊"
-            },
-            ["小鎮圖書館"] = new()
-            {
-                "【圖書館使用】- 查找布雷克伍德家族歷史",
-                "【歷史】- 理解當地歷史背景",
-                "【神秘學】- 識別奇怪符號或儀式",
-                "【說服】- 讓圖書館員提供額外協助"
-            },
-            ["莊園正門"] = new()
-            {
-                "【力量】- 強行推開生鏽的大門",
-                "【機械維修】- 修理門鎖機械",
-                "【偵查】- 尋找其他進入方式",
-                "【攀爬】- 從窗戶進入"
-            },
-            ["莊園客廳"] = new()
-            {
-                "【聆聽】- 聽見牆壁中的低語聲",
-                "【偵查】- 檢查破裂牆壁和家具",
-                "【神秘學】- 識別牆上的符號",
-                "SAN檢定 (0/1) - 見到詭異的陰影移動"
-            },
-            ["莊園書房"] = new()
-            {
-                "【圖書館使用】- 整理散落的書籍和手稿",
-                "【神秘學】- 理解禁忌知識內容",
-                "【偵查】- 尋找隱藏的日記或文件",
-                "【語言】- 翻譯古老文字"
-            },
-            ["瑪莎臥室"] = new()
-            {
-                "【聆聽】- 聽見瑪莎的夢境低語",
-                "【偵查】- 檢查沉睡的屍體",
-                "【醫學】- 判斷身體狀況",
-                "SAN檢定 (0/1) - 見到不死不活的狀態"
-            },
-            ["地下室儀式廳"] = new()
-            {
-                "【神秘學】- 理解祭壇上的符號",
-                "【克蘇魯神話】- 識別沉眠之主相關儀式",
-                "【偵查】- 尋找阻止儀式的方法",
-                "SAN檢定 (1/1d6) - 目睹儀式啟動"
-            }
-        };
+        if (_serviceProvider == null) return "服務未初始化";
 
-        // 根據玩家行動調整建議
-        var actionSuggestions = new Dictionary<string, List<string>>
-        {
-            ["搜索"] = new() { "【偵查】檢定", "【聆聽】檢定可能聽到線索" },
-            ["交談"] = new() { "【快速交談】", "【說服】", "【心理學】判斷對方" },
-            ["調查"] = new() { "【圖書館使用】", "【偵查】", "【神秘學】" },
-            ["戰鬥"] = new() { "【格鬥】", "【手槍】", "【閃避】", "SAN檢定可能需要" },
-            ["潛行"] = new() { "【潛行】", "【聆聽】注意周圍" }
-        };
+        using var scope = _serviceProvider.CreateScope();
+        var context = scope.ServiceProvider.GetRequiredService<TrpgDbContext>();
 
-        var result = $"🎲 **{sceneName}場景檢定建議**\n\n";
-
-        if (suggestions.ContainsKey(sceneName))
+        try
         {
-            result += "**場景特定檢定**:\n";
-            foreach (var suggestion in suggestions[sceneName])
+            var result = $"🎲 **{sceneName}場景檢定建議**\n\n";
+
+            // 從資料庫獲取該場景的檢定建議
+            var sceneSuggestions = await context.SceneRollSuggestions
+                .Where(srs => srs.SceneName == sceneName && srs.IsActive)
+                .OrderBy(srs => srs.DisplayOrder)
+                .ToListAsync();
+
+            if (sceneSuggestions.Any())
             {
-                result += $"• {suggestion}\n";
-            }
-            result += "\n";
-        }
-
-        if (!string.IsNullOrEmpty(playerAction))
-        {
-            result += $"**針對玩家行動 \"{playerAction}\" 的建議**:\n";
-            foreach (var action in actionSuggestions.Keys)
-            {
-                if (playerAction.Contains(action))
+                result += "**場景特定檢定**:\n";
+                foreach (var suggestion in sceneSuggestions)
                 {
-                    foreach (var suggestion in actionSuggestions[action])
+                    result += $"• {suggestion.SuggestionDescription}\n";
+                }
+                result += "\n";
+            }
+
+            // 根據玩家行動提供建議
+            if (!string.IsNullOrEmpty(playerAction))
+            {
+                var actionSuggestions = await context.ActionSuggestions
+                    .Where(a => a.IsActive && playerAction.Contains(a.ActionKeyword))
+                    .OrderBy(a => a.DisplayOrder)
+                    .ToListAsync();
+
+                if (actionSuggestions.Any())
+                {
+                    result += $"**針對玩家行動 \"{playerAction}\" 的建議**:\n";
+                    foreach (var suggestion in actionSuggestions)
                     {
-                        result += $"• {suggestion}\n";
+                        result += $"• {suggestion.SuggestionDescription}\n";
                     }
+                    result += "\n";
                 }
             }
+
+            result += "💡 **檢定難度參考**:\n";
+            result += "• 普通難度: 無修正\n";
+            result += "• 困難: -20修正\n";
+            result += "• 極難: -40修正\n";
+
+            return result;
         }
-
-        result += "\n💡 **檢定難度參考**:\n";
-        result += "• 普通難度: 無修正\n";
-        result += "• 困難: -20修正\n";
-        result += "• 極難: -40修正\n";
-
-        return result;
+        catch (Exception ex)
+        {
+            return $"❌ 獲取場景檢定建議失敗: {ex.Message}";
+        }
     }
 
     [McpServerTool, Description("獲取NPC反應建議")]
-    public static string GetNpcReactionSuggestion(string npcName, string playerApproach)
+    public static async Task<string> GetNpcReactionSuggestion(string npcName, string playerApproach)
     {
-        var npcReactions = new Dictionary<string, Dictionary<string, string>>
+        if (_serviceProvider == null) return "服務未初始化";
+
+        using var scope = _serviceProvider.CreateScope();
+        var context = scope.ServiceProvider.GetRequiredService<TrpgDbContext>();
+
+        try
         {
-            ["湯姆·米勒"] = new()
+            var result = $"🎭 **{npcName} 的反應建議**\n\n";
+
+            // 從資料庫獲取該NPC的反應資料
+            var npcReactions = await context.NpcReactions
+                .Where(nr => nr.NpcName == npcName && nr.IsActive)
+                .OrderBy(nr => nr.DisplayOrder)
+                .ToListAsync();
+
+            if (npcReactions.Any())
             {
-                ["友善"] = "熱情地為你倒酒，樂意分享當地傳聞，但對布雷克伍德館顯得有些緊張",
-                ["直接"] = "皺眉思考，提醒你那地方不太對勁，建議你不要一個人去",
-                ["威脅"] = "後退一步，警告你不要惹麻煩，其他客人也開始注意你們的對話",
-                ["賄賂"] = "偷偷收下錢財，壓低聲音告訴你一些他平常不會說的秘密"
-            },
-            ["瑪格麗特·懷特"] = new()
-            {
-                ["學術"] = "眼睛發亮，熱切地與你討論歷史資料，主動提供額外的研究材料",
-                ["直接"] = "調整眼鏡，嚴肅地告訴你布雷克伍德家族的黑暗歷史",
-                ["急躁"] = "提醒你保持安靜，但仍會協助你查找資料，只是效率較低",
-                ["恭敬"] = "被你的禮貌打動，額外花時間幫你整理最相關的文件"
-            },
-            ["亨利·阿什頓"] = new()
-            {
-                ["關心"] = "感激你的到來，但說話支離破碎，時常提到'夢境'和'她在呼喚'",
-                ["質疑"] = "懷疑你的動機，警告你離開這裡，但又矛盾地希望你能阻止什麼",
-                ["專業"] = "試圖用學術語言解釋他的發現，但經常陷入瘋狂的呢喃"
+                result += "**根據玩家態度的反應**:\n";
+                foreach (var reaction in npcReactions)
+                {
+                    result += $"**{reaction.PlayerApproach}態度**: {reaction.ReactionDescription}\n\n";
+                }
             }
-        };
-
-        var result = $"🎭 **{npcName} 的反應建議**\n\n";
-
-        if (npcReactions.ContainsKey(npcName))
-        {
-            result += "**根據玩家態度的反應**:\n";
-            foreach (var reaction in npcReactions[npcName])
+            else
             {
-                result += $"**{reaction.Key}態度**: {reaction.Value}\n\n";
+                result += "**通用NPC反應原則**:\n";
+                result += "• 友善態度: NPC更願意分享資訊和提供幫助\n";
+                result += "• 威脅態度: NPC變得防禦性，可能隱藏重要資訊\n";
+                result += "• 專業態度: 適合學術型NPC，能獲得更深入的知識\n";
+                result += "• 同情態度: 對受到創傷的NPC有效，能獲得情感上的連結\n\n";
             }
-        }
-        else
-        {
-            result += "**通用NPC反應原則**:\n";
-            result += "• 友善態度: NPC更願意分享資訊和提供幫助\n";
-            result += "• 威脅態度: NPC變得防禦性，可能隱藏重要資訊\n";
-            result += "• 專業態度: 適合學術型NPC，能獲得更深入的知識\n";
-            result += "• 同情態度: 對受到創傷的NPC有效，能獲得情感上的連結\n\n";
-        }
 
-        if (!string.IsNullOrEmpty(playerApproach))
-        {
-            result += $"**針對玩家採取的 \"{playerApproach}\" 方式**:\n";
-            result += "建議進行適當的社交技能檢定:\n";
-            result += "• 【快速交談】- 快速建立關係\n";
-            result += "• 【說服】- 讓NPC接受你的觀點\n";
-            result += "• 【心理學】- 理解NPC的真實想法\n";
-            result += "• 【恐嚇】- 強迫獲取資訊(有風險)\n";
-        }
+            if (!string.IsNullOrEmpty(playerApproach))
+            {
+                result += $"**針對玩家採取的 \"{playerApproach}\" 方式**:\n";
+                result += "建議進行適當的社交技能檢定:\n";
+                result += "• 【快速交談】- 快速建立關係\n";
+                result += "• 【說服】- 讓NPC接受你的觀點\n";
+                result += "• 【心理學】- 理解NPC的真實想法\n";
+                result += "• 【恐嚇】- 強迫獲取資訊(有風險)\n";
+            }
 
-        return result;
+            return result;
+        }
+        catch (Exception ex)
+        {
+            return $"❌ 獲取NPC反應建議失敗: {ex.Message}";
+        }
     }
 
     // 輔助方法
-    private static int GetBaseSuccessRate(string skillName)
+    private static async Task<int> GetBaseSuccessRateAsync(string skillName)
     {
-        return skillName switch
+        if (_serviceProvider == null) return 0;
+
+        using var scope = _serviceProvider.CreateScope();
+        var context = scope.ServiceProvider.GetRequiredService<TrpgDbContext>();
+
+        try
         {
-            "偵查" => 25,
-            "聆聽" => 25,
-            "圖書館使用" => 25,
-            "追蹤" => 10,
+            var basicSkill = await context.BasicSkills
+                .FirstOrDefaultAsync(bs => bs.Name == skillName);
 
-            // 社交技能  
-            "魅惑" => 15,
-            "說服" => 15,
-            "恐嚇" => 15,
-            "快速交談" => 5,
-
-            // 學術技能
-            "考古學" => 1,
-            "歷史" => 20,
-            "神秘學" => 5,
-            "心理學" => 1,
-
-            "閃避" => 50,
-            "母語" => 80,
-            "信譽" => 15,
-            "克蘇魯神話" => 0,
-            "駕駛" => 20,
-            "格鬥" => 25,
-            "手槍" => 20,
-            "跳躍" => 25,
-            "攀爬" => 40,
-            "游泳" => 25,
-            "投擲" => 25,
-            _ => 1
-        };
+            return basicSkill?.BaseSuccessRate ?? 0;
+        }
+        catch
+        {
+            return 0;
+        }
     }
 }

@@ -45,10 +45,10 @@ public class KeeperAssistantService
         description += "🌍 **環境資訊**:\n";
         description += $"• 光線條件: {scene.LightingCondition}\n";
         description += $"• 溫度: {scene.Temperature}\n";
-        
+
         if (!string.IsNullOrEmpty(scene.SoundEnvironment))
             description += $"• 聲音環境: {scene.SoundEnvironment}\n";
-        
+
         if (!string.IsNullOrEmpty(scene.Smell))
             description += $"• 氣味: {scene.Smell}\n";
 
@@ -84,7 +84,7 @@ public class KeeperAssistantService
         if (includeHiddenElements)
         {
             description += "🔒 **KP專用資訊**:\n";
-            
+
             if (!string.IsNullOrEmpty(scene.HiddenClues))
                 description += $"💡 隱藏線索: {scene.HiddenClues}\n";
 
@@ -137,7 +137,7 @@ public class KeeperAssistantService
             try
             {
                 var dialogueOptions = JsonSerializer.Deserialize<DialogueOption[]>(npc.DialogueOptions);
-                var relevantOption = dialogueOptions?.FirstOrDefault(opt => 
+                var relevantOption = dialogueOptions?.FirstOrDefault(opt =>
                     opt.Topic.Contains(topic, StringComparison.OrdinalIgnoreCase) ||
                     topic.Contains(opt.Topic, StringComparison.OrdinalIgnoreCase));
 
@@ -250,53 +250,81 @@ public class KeeperAssistantService
     /// <summary>
     /// 生成隨機事件
     /// </summary>
-    public string GenerateRandomEvent(string sceneType, int dangerLevel)
+    public async Task<string> GenerateRandomEventAsync(string sceneType, int dangerLevel)
     {
-        var events = sceneType.ToLower() switch
+        // 從資料庫獲取適合的隨機事件
+        var availableEvents = await _context.RandomEvents
+            .Where(re => re.IsActive &&
+                (re.SceneType.Equals(sceneType, StringComparison.CurrentCultureIgnoreCase) || re.SceneType == "通用") &&
+                re.MinDangerLevel <= dangerLevel &&
+                re.MaxDangerLevel >= dangerLevel)
+            .ToListAsync();
+
+        if (availableEvents.Count == 0)
         {
-            "室內" => new[]
+            // 如果沒有找到合適的事件，回退到通用事件
+            availableEvents = await _context.RandomEvents
+                .Where(re => re.IsActive && re.SceneType == "通用")
+                .ToListAsync();
+        }
+
+        if (availableEvents.Count == 0)
+        {
+            return "🎭 **隨機事件**\n\n" +
+                   "環境中傳來一些不尋常的聲響\n\n" +
+                   "💡 **KP提示**: 可要求相關的 SAN 檢定或技能檢定";
+        }
+
+        // 根據權重選擇事件
+        var totalWeight = availableEvents.Sum(e => e.Weight);
+        var randomValue = _random.Next(1, totalWeight + 1);
+        var currentWeight = 0;
+
+        RandomEvent selectedEvent = availableEvents.First();
+        foreach (var eventOption in availableEvents)
+        {
+            currentWeight += eventOption.Weight;
+            if (randomValue <= currentWeight)
             {
-                "聽到樓上傳來腳步聲",
-                "門突然無風自動關閉",
-                "燈光閃爍不定",
-                "牆壁發出奇怪的響聲",
-                "感覺到有人在背後注視",
-                "房間溫度突然下降"
-            },
-            "室外" => new[]
-            {
-                "烏雲遮住月光",
-                "遠方傳來野獸嚎叫",
-                "風聲中似乎有人在呼喊",
-                "看到遠處有人影晃動",
-                "地面出現奇怪的腳印",
-                "突然起霧，視線變得模糊"
-            },
-            "地下室" => new[]
-            {
-                "水滴聲越來越急促",
-                "空氣中瀰漫著霉味",
-                "牆壁上出現新的裂縫",
-                "聽到遠處傳來低語聲",
-                "感覺到地面在輕微震動",
-                "看到牆上的影子在移動"
-            },
-            _ => new[]
-            {
-                "感到一陣莫名的寒意",
-                "聽到奇怪的聲響",
-                "環境氣氛變得詭異",
-                "感覺有什麼不對勁",
-                "空氣中瀰漫著不祥的預感"
+                selectedEvent = eventOption;
+                break;
             }
-        };
+        }
 
-        var selectedEvent = events[_random.Next(events.Length)];
-        var intensity = dangerLevel > 5 ? "強烈" : dangerLevel > 3 ? "明顯" : "輕微";
+        // 獲取事件強度
+        var intensity = await _context.EventIntensities
+            .FirstOrDefaultAsync(ei => ei.IsActive &&
+                ei.MinDangerLevel <= dangerLevel &&
+                ei.MaxDangerLevel >= dangerLevel);
 
-        return $"🎭 **隨機事件** ({intensity})\n\n" +
-               $"{selectedEvent}\n\n" +
-               $"💡 **KP提示**: 可要求相關的 SAN 檢定或技能檢定";
+        var intensityName = intensity?.DisplayName ?? (dangerLevel > 5 ? "強烈" : dangerLevel > 3 ? "明顯" : "輕微");
+
+        var result = $"🎭 **隨機事件** ({intensityName})\n\n" +
+                    $"{selectedEvent.Description}\n\n";
+
+        // 添加建議的檢定
+        var suggestions = new List<string>();
+        if (!string.IsNullOrEmpty(selectedEvent.SuggestedSanityCheck))
+            suggestions.Add($"SAN檢定: {selectedEvent.SuggestedSanityCheck}");
+        if (!string.IsNullOrEmpty(selectedEvent.SuggestedSkillCheck))
+            suggestions.Add($"技能檢定: {selectedEvent.SuggestedSkillCheck}");
+
+        if (suggestions.Any())
+        {
+            result += $"🎲 **建議檢定**: {string.Join(", ", suggestions)}\n\n";
+        }
+
+        // 添加KP提示
+        if (!string.IsNullOrEmpty(selectedEvent.KeeperTips))
+        {
+            result += $"💡 **KP提示**: {selectedEvent.KeeperTips}";
+        }
+        else
+        {
+            result += "💡 **KP提示**: 可要求相關的 SAN 檢定或技能檢定";
+        }
+
+        return result;
     }
 
     /// <summary>

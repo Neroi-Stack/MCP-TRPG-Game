@@ -47,8 +47,8 @@ public class CharacterTemplateService
         var attributes = JsonSerializer.Deserialize<Dictionary<string, int>>(template.AttributeTemplate) ?? new();
         var skills = JsonSerializer.Deserialize<Dictionary<string, int>>(template.ProfessionalSkills) ?? new();
 
-        var gender = _random.Next(2) == 0 ? "男" : "女";
-        var genderCode = gender == "男" ? "M" : "F";
+        var gender = _random.Next(2) == 0 ? "Male" : "Female";
+        var genderCode = gender == "Male" ? "M" : "F";
         var age = GenerateRandomAge(template.AgeRange);
         var ageGroup = GetAgeGroup(age);
 
@@ -67,14 +67,14 @@ public class CharacterTemplateService
             Traits = template.RecommendedTraits,
 
             // 屬性值（在模板基礎上加上隨機變化，更符合該職業特性）
-            Strength = Math.Max(attributes.GetValueOrDefault("STR", _coc7Rules.Roll3d6() * 5) + _random.Next(-10, 11), 1),
-            Dexterity = Math.Max(attributes.GetValueOrDefault("DEX", _coc7Rules.Roll3d6() * 5) + _random.Next(-10, 11), 1),
-            Intelligence = Math.Max(attributes.GetValueOrDefault("INT", (_coc7Rules.Roll2d6() + 6) * 5) + _random.Next(-10, 11), 1),
-            Constitution = Math.Max(attributes.GetValueOrDefault("CON", _coc7Rules.Roll3d6() * 5) + _random.Next(-10, 11), 1),
-            Appearance = Math.Max(attributes.GetValueOrDefault("APP", _coc7Rules.Roll3d6() * 5) + _random.Next(-10, 11), 1),
-            Education = Math.Max(attributes.GetValueOrDefault("EDU", (_coc7Rules.Roll2d6() + 6) * 5) + _random.Next(-10, 11), 1),
-            Size = Math.Max(attributes.GetValueOrDefault("SIZ", _coc7Rules.Roll3d6() * 5) + _random.Next(-10, 11), 1),
-            Power = Math.Max(attributes.GetValueOrDefault("POW", _coc7Rules.Roll3d6() * 5) + _random.Next(-10, 11), 1),
+            Strength = Math.Max(attributes.GetValueOrDefault("STR", _coc7Rules.Rolld6(3) * 5) + _random.Next(-10, 11), 1),
+            Dexterity = Math.Max(attributes.GetValueOrDefault("DEX", _coc7Rules.Rolld6(3) * 5) + _random.Next(-10, 11), 1),
+            Intelligence = Math.Max(attributes.GetValueOrDefault("INT", (_coc7Rules.Rolld6(2) + 6) * 5) + _random.Next(-10, 11), 1),
+            Constitution = Math.Max(attributes.GetValueOrDefault("CON", _coc7Rules.Rolld6(3) * 5) + _random.Next(-10, 11), 1),
+            Appearance = Math.Max(attributes.GetValueOrDefault("APP", _coc7Rules.Rolld6(3) * 5) + _random.Next(-10, 11), 1),
+            Education = Math.Max(attributes.GetValueOrDefault("EDU", (_coc7Rules.Rolld6(2) + 6) * 5) + _random.Next(-10, 11), 1),
+            Size = Math.Max(attributes.GetValueOrDefault("SIZ", _coc7Rules.Rolld6(3) * 5) + _random.Next(-10, 11), 1),
+            Power = Math.Max(attributes.GetValueOrDefault("POW", _coc7Rules.Rolld6(3) * 5) + _random.Next(-10, 11), 1),
 
             ProfessionalSkillPoints = skills
         };
