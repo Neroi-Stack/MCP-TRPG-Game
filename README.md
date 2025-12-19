@@ -57,12 +57,6 @@ https://github.com/user-attachments/assets/237294ee-6db8-4e5e-8d49-f028fc6b50d7
 	- Persistent game records, timeline management, and event logging.
 	- SQLite database for reliable data storage.
 
-- **🌐 MCP-Enabled API Architecture:**
-	- RESTful API enhanced with MCP protocol for AI integration
-	- Seamless connection between AI models and game mechanics
-	- Easily integrate with MCP-compatible AI clients, frontends, bots, or other tools
-	- Real-time bidirectional communication between AI and game server
-
 - **Seed Data Loader:**
 	- CSV-based initial data for skills, scenarios, NPCs, scenes, and more.
 
@@ -74,9 +68,6 @@ https://github.com/user-attachments/assets/237294ee-6db8-4e5e-8d49-f028fc6b50d7
 
 - **Customizable Rules:**
 	- Built-in support for CoC7 rules, but easily extendable for other TRPG systems.
-
-- **Automated Testing & API Examples:**
-	- Example HTTP requests in `MCPTRPGGame.http` for quick API testing.
 
 - **Instant Game Start for Players:**
   - Players can simply input "I want to start playing TRPG" to immediately begin a new TRPG adventure, with the LLM Keeper guiding the session from the start.
