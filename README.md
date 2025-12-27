@@ -83,7 +83,7 @@ https://github.com/user-attachments/assets/237294ee-6db8-4e5e-8d49-f028fc6b50d7
 	 - Download and install [.NET 9.0 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
 
 2. **MCP-Compatible AI Client** (Optional for enhanced AI integration)
-	 - Claude Desktop, VS Code with MCP extensions, or other MCP-enabled clients
+	 - Cursor, VS Code, Claude Desktop with MCP extensions, or other MCP-enabled clients
 	 - This enables seamless AI interaction with the TRPG server through MCP protocol
 
 ### Setup & Launch
@@ -93,10 +93,46 @@ https://github.com/user-attachments/assets/237294ee-6db8-4e5e-8d49-f028fc6b50d7
 	 ```
 
 4. **Run the MCP-Enabled TRPG Server**
-	 ```powershell
-	 dotnet run
-	 ```
-	 The server will start with MCP tools available for AI integration
+	<details open>
+	<summary><b>Cursor</b></summary>
+	
+	Go to: `Settings` -> `Cursor Settings` -> `Tools & MCP`
+	You should see trpg-mcp in the list and enable it.
+	If you don’t see it, click `New MCP Server` and copy and paste the JSON below.
+	```json
+	{
+		"mcpServers": {
+			"trpg-mcp": {
+				"command": "dotnet",
+				"args": [ "run" ],
+				"type": "stdio"
+			}
+		}
+	}
+	```
+	
+	</details>
+	<details open>
+	<summary><b>VS Code</b></summary>
+
+	Press `F1` and enter `MCP: List Servers`.  
+	You should see **trpg-mcp** in the list—click to start the server.  
+	If you don’t see it, press `F1` and enter `MCP: Open User Configuration`, then copy and paste the JSON below.
+	```json
+	{
+		"servers": {
+			"trpg-mcp": {
+				"type": "stdio",
+				"command": "dotnet",
+				"args": [
+					"run"
+				]
+			}
+		},
+		"inputs": []
+	}
+	```
+	</details>
 
 4. **Default Database**
 	 - Uses SQLite (`trpg.db`) by default. The database is auto-created on first run.
