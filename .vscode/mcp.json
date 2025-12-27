@@ -1,6 +1,6 @@
 {
 	"servers": {
-		"my-mcp-server-3a683309": {
+		"trpg-mcp": {
 			"type": "stdio",
 			"command": "dotnet",
 			"args": [

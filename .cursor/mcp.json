@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "trpg-mcp": {
+      	"command": "dotnet",
+		    "args": [ "run" ],
+	  	  "type": "stdio"
+    }
+  }
+}
