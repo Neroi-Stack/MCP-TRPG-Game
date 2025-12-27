@@ -83,7 +83,7 @@ https://github.com/user-attachments/assets/237294ee-6db8-4e5e-8d49-f028fc6b50d7
 	 - Download and install [.NET 9.0 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
 
 2. **MCP-Compatible AI Client** (Optional for enhanced AI integration)
-	 - Cursor, VS Code, Claude Desktop with MCP extensions, or other MCP-enabled clients
+	 - Cursor, Claude Desktop, VS Code with MCP extensions, or other MCP-enabled clients
 	 - This enables seamless AI interaction with the TRPG server through MCP protocol
 
 ### Setup & Launch
