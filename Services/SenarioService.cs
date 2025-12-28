@@ -1,0 +1,36 @@
+using MCPTRPGGame.Data;
+using MCPTRPGGame.Data.Models;
+using MCPTRPGGame.DTO;
+using MCPTRPGGame.Services.Interface;
+using Microsoft.EntityFrameworkCore;
+
+namespace MCPTRPGGame.Services;
+
+/// <summary>
+/// 劇本管理服務
+/// </summary>
+public class ScenarioService : IScenarioService
+{
+	private readonly TrpgDbContext _context;
+
+	public ScenarioService(TrpgDbContext context)
+	{
+		_context = context;
+	}
+
+	public async Task<List<ScenarioView?>> GetAllScenariosAsync()
+	{
+		var scenarios = await _context.Scenarios
+			.Include(s => s.Scenes)
+			.ToListAsync();
+		return [.. scenarios.Select(s => (ScenarioView?)s)];
+	}
+
+	public async Task<ScenarioView?> GetScenarioByIdAsync(int scenarioId)
+	{
+		var scenario = await _context.Scenarios
+			.Include(x => x.Scenes)
+			.FirstOrDefaultAsync(s => s.Id == scenarioId);
+		return scenario == null ? null : (ScenarioView)scenario!;
+	}
+}

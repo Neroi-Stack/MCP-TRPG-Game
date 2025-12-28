@@ -2,18 +2,12 @@
 
 An advanced **MCP (Model Context Protocol) powered** TRPG (Tabletop Role-Playing Game) server designed for automated, AI-driven adventures. This project leverages the revolutionary **MCP technology** to seamlessly connect Large Language Models (LLMs) with game mechanics, creating an intelligent AI Keeper (KP) that can dynamically lead, narrate, and manage immersive gaming sessions.
 
-## 🚀 What is MCP?
+## 🛣️ Roadmap / Future Goals
 
-**Model Context Protocol (MCP)** is a technology that enables AI models to interact with external tools and data sources in real-time. In MCPTRPGGame, MCP serves as the bridge between the AI and the game world, allowing the AI Keeper to:
+- [ ] **TRPG MCP Client** — UI for dice, character, multiplayer, and more
+- [ ] **Import Your Own Scenarios** — Custom scenario CSV import & editor
+- [ ] **Multi-Player Support** — Multiple players, sessions, real-time
 
-- **Access game data dynamically** - Characters, scenarios, NPCs, and game state
-- **Execute game mechanics** - Dice rolls, skill checks, combat calculations
-- **Modify game world** - Create events, update character stats, progress storylines
-- **Provide contextual responses** - Rich, data-driven narrative based on current game state
-
-This makes every gaming session truly adaptive and responsive to player actions!
-
-An advanced TRPG (Tabletop Role-Playing Game) server designed for automated, AI-driven adventures. This project leverages Large Language Models (LLMs) as the Keeper (KP), allowing the AI to lead, narrate, and manage the game, making every session dynamic and immersive.
 
 ## 🎮 Demo Video
 
@@ -25,56 +19,17 @@ https://github.com/user-attachments/assets/237294ee-6db8-4e5e-8d49-f028fc6b50d7
 
 ## Key Features
 
-- **🔗 MCP-Powered AI Keeper (KP):**
-	- Leverages **Model Context Protocol** for seamless AI-game integration
-	- The AI Keeper dynamically accesses and manipulates game data through MCP tools
-	- Real-time contextual decision making based on current game state
-	- Supports fully automated game sessions with intelligent event generation and story progression
-
-- **🛠️ Rich MCP Tool Integration:**
-	- 10+ specialized MCP tools for comprehensive game management
-	- Character creation, skill checks, combat assistance, and scenario management
-	- Dynamic NPC dialogue generation and scene description enhancement
-	- Automated game progress tracking and decision suggestions
-
-- **Character Creation & Management:**
-	- Create, edit, and manage player and non-player characters.
-	- Supports custom attributes, skills, sanity (SAN) checks, and inventory.
-
-- **Scenario & Scene Management:**
-	- Flexible scenario system for custom adventures.
-	- Scene descriptions, hidden elements, and dynamic event generation.
-
-- **Keeper Assistant Tools:**
-	- Random event generator, NPC dialogue engine, scene description enhancer.
-	- Automated suggestions for game progress and dice rolls.
-
-- **Skill, Attribute, and Sanity Checks:**
-	- Automated dice rolling for skills, attributes, and sanity.
-	- Customizable difficulty and result interpretation.
-
-- **Game Progress Tracking:**
-	- Persistent game records, timeline management, and event logging.
-	- SQLite database for reliable data storage.
-
-- **Seed Data Loader:**
-	- CSV-based initial data for skills, scenarios, NPCs, scenes, and more.
-
-- **Extensible Service Architecture:**
-	- Modular services for character, scenario, random elements, and more.
-
-- **Multi-Player Support:**
-	- Manage multiple players, sessions, and game states concurrently.
-
-- **Customizable Rules:**
-	- Built-in support for CoC7 rules, but easily extendable for other TRPG systems.
-
-- **Instant Game Start for Players:**
-  - Players can simply input "I want to start playing TRPG" to immediately begin a new TRPG adventure, with the LLM Keeper guiding the session from the start.
-
-- **Language Support:**
-	- Currently, the main supported language is Traditional Chinese (zh-TW).
-	- Future releases aim to support i18n (internationalization) for multi-language gameplay and UI.
+- MCP-powered AI Keeper: Automated, intelligent game master
+- Rich MCP toolset: Character, scenario, skill, dice, and event management
+- Fast character creation and editing
+- Flexible scenario and scene system
+- Keeper assistant: NPC dialogue, scene description, random events
+- Skill, attribute, sanity checks with dice rolling
+- Persistent game records (SQLite)
+- CSV seed data for easy import
+- Modular service architecture
+- Instant game start: Just type "I want to start playing TRPG"
+- Language: Traditional Chinese (zh-TW), i18n planned
 
 ## Getting Started
 
@@ -83,14 +38,18 @@ https://github.com/user-attachments/assets/237294ee-6db8-4e5e-8d49-f028fc6b50d7
 	 - Download and install [.NET 9.0 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
 
 2. **MCP-Compatible AI Client** (Optional for enhanced AI integration)
-	 - Cursor, Claude Desktop, VS Code with MCP extensions, or other MCP-enabled clients
-	 - This enables seamless AI interaction with the TRPG server through MCP protocol
+	- Cursor, Claude Desktop, VS Code with MCP extensions, or other MCP-enabled clients
+	- This enables seamless AI interaction with the TRPG server through MCP protocol
 
 ### Setup & Launch
 3. **Build the Project**
-	 ```powershell
-	 dotnet build
-	 ```
+	```
+	if you are version 1, please delete ./trpg.db file first
+	```
+	and
+	```powershell
+	dotnet build
+	```
 
 4. **Run the MCP-Enabled TRPG Server**
 	<details open>
@@ -149,28 +108,39 @@ https://github.com/user-attachments/assets/237294ee-6db8-4e5e-8d49-f028fc6b50d7
 The server provides 30+ specialized MCP tools for comprehensive TRPG management:
 
 ### Core Game Tools
-- `start_trpg_adventure` - Instant game initialization
-- `create_character` - Dynamic character creation
-- `roll_skill_check`, `roll_attribute_check`, `roll_sanity_check` - Dice mechanics
-- `combat_assistance` - Battle management
+- `StartTrpgAdventure` — Instantly initialize a new TRPG session with step-by-step AI guidance
+- `GetAllScenariosAsync` — List all available scenarios for selection
+- `GetScenarioByIdAsync` — Get detailed info for a specific scenario
+- `GetAllCharactersAsync` — List all player characters
+- `GetCharacterByIdAsync` — Get a player character's current status
+- `CreateCharacterAsync` — Create a new player character (CoC7 rules supported)
+- `UpdateCharacterAsync` — Update a player character's information
+- `UpdateCharacterAttributeAsync` — Update a specific attribute of a player character
+- `DeleteCharacterAsync` — Delete a player character by ID
+- `GetAvailableCharacterTemplates` — List available character templates for creation
 
-### AI Keeper Assistant Tools  
-- `generate_npc_dialogue` - Dynamic NPC interactions
-- `generate_scene_description` - Rich environmental storytelling
-- `generate_random_event` - Adaptive story progression
-- `get_game_progress_suggestion` - Intelligent session guidance
+### Dice & Check Tools
+- `SkillCheckAsync` — Perform a skill check for a character
+- `AttributeCheckAsync` — Perform an attribute check for a character
+- `SanityCheck` — Perform a sanity check for a character
+- `SavingThrowAsync` — Perform a saving throw for a character
+- `CalculateDamageAsync` — Calculate damage for an attack
+- `RollDiceAsync` — Roll dice using standard notation (e.g., 1d100)
 
-### Session Management
-- `create_game_session`, `log_game_event` - Session tracking
-- `get_scenario_info`, `get_scene_info` - World state access
-- `update_character_hit_points` - Real-time character management
+### AI Keeper Assistant Tools
+- `GenerateSceneDescriptionAsync` — Generate a vivid scene description (NPCs, items, actions)
+- `GenerateNpcDialogueAsync` — Generate dynamic NPC dialogue suggestions
+- `SuggestChecksAndDifficultiesAsync` — Suggest checks and difficulty levels for the current scene
+- `GenerateRandomEventAsync` — Generate a random event for the scene or scenario
+- `GetGameProgressSuggestionsAsync` — Suggest next steps based on game progress
 
-*All tools are designed for seamless AI integration through the MCP protocol.*
+*All tools are designed for seamless AI integration through the MCP protocol and are accessible to both AI and human Keepers.*
 
 ## Directory Structure
 
-- `Controllers/` — Tool controllers
-- `Models/` — Data models
+- `Tools/` — Tool controllers
+- `DTO/` — Data models
+- `Request/` — Request Data models
 - `Services/` — Business logic and game services
 - `Data/` — Database context
 - `seed/` — Initial CSV data files

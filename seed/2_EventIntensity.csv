@@ -1,4 +1,5 @@
-Id,Key,DisplayName,MinDangerLevel,MaxDangerLevel,Description,DisplayOrder,IsActive,CreatedAt
-1,MILD,輕微,1,3,低強度的事件效果,1,true,2024-01-01 00:00:00
-2,MODERATE,明顯,4,6,中等強度的事件效果,2,true,2024-01-01 00:00:00
-3,STRONG,強烈,7,10,高強度的事件效果,3,true,2024-01-01 00:00:00
+Id,Name,Level,Description,CreatedAt,UpdatedAt
+1,微弱,1,"小規模異常，通常是環境或小範圍幻象影響。",2025-12-27,2025-12-27
+2,中等,2,"中等強度事件，可能造成NPC失蹤或小規模衝突。",2025-12-27,2025-12-27
+3,強烈,3,"高強度異常，涉及儀式或顯著的超自然現象。",2025-12-27,2025-12-27
+4,災變,4,"災難級事件，會改變場景或觸發大型敵對出現。",2025-12-27,2025-12-27
