@@ -40,6 +40,15 @@ public class TrpgDbContext(DbContextOptions<TrpgDbContext> options) : DbContext(
 	public DbSet<SceneRollSuggestionScene> SceneRollSuggestionScenes { get; set; }
 	public DbSet<SceneRollSuggestionSkill> SceneRollSuggestionSkills { get; set; }
 
+	// TODO: CREATE Character flow support
+	public DbSet<Profession> Professions { get; set; }
+	public DbSet<StatusEffect> StatusEffects { get; set; }
+	public DbSet<RollHistory> RollHistories { get; set; }
+	public DbSet<CombatSession> CombatSessions { get; set; }
+	public DbSet<CombatAction> CombatActions { get; set; }
+	public DbSet<CharacterStatusEffect> CharacterStatusEffects { get; set; }
+	public DbSet<ProfessionSkill> ProfessionSkills { get; set; }
+
 	/// <summary>
 	/// Configure composite keys and relationships for many-to-many join tables.
 	/// Keep mappings explicit to ensure correct composite primary keys and indexes.

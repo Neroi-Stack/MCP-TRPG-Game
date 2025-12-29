@@ -1,6 +1,5 @@
 using System.ComponentModel;
 using MCPTRPGGame.Data.Models;
-using MCPTRPGGame.DTO;
 
 namespace MCP_TRPG_Game.Request
 {

@@ -20,26 +20,42 @@ public static partial class TrpgTools
 		return JsonSerializer.Serialize(characters);
 	}
 
-	[McpServerTool, Description("Create a new player character using CoC7 rules.")]
-	public static async Task<string> CreateCharacterAsync([Description("The player character to create")] PlayerCharacterRequest playerCharacter)
+	[McpServerTool, Description("Creates a new player character from a template ID.")]
+	public static async Task<string> CreateCharacterFromTemplateIdAsync([Description("The template ID user choose to create the character from")] string templateId)
 	{
-		if (_serviceProvider == null) return "service not initialized";
-		using var scope = _serviceProvider.CreateScope();
-		var characterService = scope.ServiceProvider.GetRequiredService<ICharacterService>();
-		var checkService = scope.ServiceProvider.GetRequiredService<ICheckService>();
-		playerCharacter.IsTemplate = false;
-		var result = await characterService.CreateCharacterAsync(playerCharacter);
-		return JsonSerializer.Serialize(result);
+		try{
+			if (_serviceProvider == null) return "service not initialized";
+			using var scope = _serviceProvider.CreateScope();
+			var characterService = scope.ServiceProvider.GetRequiredService<ICharacterService>();
+			var characters = await characterService.CreateCharacterFromTemplateIdAsync(int.Parse(templateId));
+			return characters != null ? $"Create successful : {JsonSerializer.Serialize(characters)}" : "Create failed";
+		}
+		catch(Exception ex)
+		{
+			return $"Error: {ex.Message}";
+		}
 	}
 
+	// [McpServerTool, Description("Create a new player character using CoC7 rules.")]
+	// public static async Task<string> CreateCharacterAsync([Description("The player character to create")] PlayerCharacterRequest playerCharacter)
+	// {
+	// 	if (_serviceProvider == null) return "service not initialized";
+	// 	using var scope = _serviceProvider.CreateScope();
+	// 	var characterService = scope.ServiceProvider.GetRequiredService<ICharacterService>();
+	// 	var checkService = scope.ServiceProvider.GetRequiredService<ICheckService>();
+	// 	playerCharacter.IsTemplate = false;
+	// 	var result = await characterService.CreateCharacterAsync(playerCharacter);
+	// 	return JsonSerializer.Serialize(result);
+	// }
+
 	[McpServerTool, Description("Update a player character's information.")]
-	public static async Task<string> UpdateCharacterAsync([Description("The player character to update")] PlayerCharacter playerCharacter)
+	public static async Task<string> UpdateCharacterAsync([Description("The ID of the character to update")] string characterId, [Description("The player character to update")] PlayerCharacterRequest playerCharacter)
 	{
 		if (_serviceProvider == null) return "service not initialized";
 		using var scope = _serviceProvider.CreateScope();
 		var characterService = scope.ServiceProvider.GetRequiredService<ICharacterService>();
-		var result = await characterService.UpdateCharacterAsync(playerCharacter);
-		return result ? "Update successful" : "Character not found";
+		var character = await characterService.UpdateCharacterAsync(int.Parse(characterId), playerCharacter);
+		return character != null ? $"Update successful : {JsonSerializer.Serialize(character)}" : "Character not found";
 	}
 
 	[McpServerTool, Description("Update a player character's attribute.")]
@@ -48,8 +64,8 @@ public static partial class TrpgTools
 		if (_serviceProvider == null) return "service not initialized";
 		using var scope = _serviceProvider.CreateScope();
 		var characterService = scope.ServiceProvider.GetRequiredService<ICharacterService>();
-		var result = await characterService.UpdateCharacterAttributeAsync(int.Parse(characterId), attributeName, int.Parse(newValue));
-		return result ? "Attribute update successful" : "Character or attribute not found";
+		var character = await characterService.UpdateCharacterAttributeAsync(int.Parse(characterId), attributeName, int.Parse(newValue));
+		return character != null ? $"Attribute update successful : {JsonSerializer.Serialize(character)}" : "Character or attribute not found";
 	}
 
 	[McpServerTool, Description("Get a player character current status.")]
@@ -59,7 +75,7 @@ public static partial class TrpgTools
 		using var scope = _serviceProvider.CreateScope();
 		var characterService = scope.ServiceProvider.GetRequiredService<ICharacterService>();
 		var character = await characterService.GetCharacterByIdAsync(int.Parse(characterId));
-		return JsonSerializer.Serialize(character);
+		return character != null ? JsonSerializer.Serialize(character) : "Character not found";
 	}
 
 	[McpServerTool, Description("Delete a player character by ID.")]

@@ -2,7 +2,7 @@
 	"mcpServers": {
 		"trpg-mcp": {
 			"command": "dotnet",
-			"args": [ "run" ],
+			"args": [ "run", "--stdio" ],
 			"type": "stdio"
 		}
 	}

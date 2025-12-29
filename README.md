@@ -63,8 +63,25 @@ https://github.com/user-attachments/assets/237294ee-6db8-4e5e-8d49-f028fc6b50d7
 		"mcpServers": {
 			"trpg-mcp": {
 				"command": "dotnet",
-				"args": [ "run" ],
+				"args": [ "run", "--stdio" ],
 				"type": "stdio"
+			}
+		}
+	}
+	```
+	if you want to use http mode
+	```bash
+	dotnet run
+	```
+	```json
+	{
+		"mcpServers": {
+			"trpg-mcp": {
+				"type": "http",
+				"url": "http://localhost:5000/mcp",
+				"env": {
+					"ASPNETCORE_ENVIRONMENT": "Local"
+				}
 			}
 		}
 	}
@@ -84,11 +101,29 @@ https://github.com/user-attachments/assets/237294ee-6db8-4e5e-8d49-f028fc6b50d7
 				"type": "stdio",
 				"command": "dotnet",
 				"args": [
-					"run"
+					"run" ,
+					"--stdio",
 				]
 			}
-		},
-		"inputs": []
+		}
+	}
+	```
+
+	if you want to use http mode
+	```bash
+	dotnet run
+	```
+	```json
+	{
+		"servers": {
+			"trpg-mcp": {
+				"type": "http",
+				"url": "http://localhost:5000/mcp",
+				"env": {
+					"ASPNETCORE_ENVIRONMENT": "Local"
+				}
+			}
+		}
 	}
 	```
 	</details>
@@ -108,31 +143,32 @@ https://github.com/user-attachments/assets/237294ee-6db8-4e5e-8d49-f028fc6b50d7
 The server provides 30+ specialized MCP tools for comprehensive TRPG management:
 
 ### Core Game Tools
-- `StartTrpgAdventure` — Instantly initialize a new TRPG session with step-by-step AI guidance
-- `GetAllScenariosAsync` — List all available scenarios for selection
-- `GetScenarioByIdAsync` — Get detailed info for a specific scenario
-- `GetAllCharactersAsync` — List all player characters
-- `GetCharacterByIdAsync` — Get a player character's current status
-- `CreateCharacterAsync` — Create a new player character (CoC7 rules supported)
-- `UpdateCharacterAsync` — Update a player character's information
-- `UpdateCharacterAttributeAsync` — Update a specific attribute of a player character
-- `DeleteCharacterAsync` — Delete a player character by ID
-- `GetAvailableCharacterTemplates` — List available character templates for creation
+- [x] `StartTrpgAdventure` — Instantly initialize a new TRPG session with step-by-step AI guidance
+- [x] `GetAllScenariosAsync` — List all available scenarios for selection
+- [x] `GetScenarioByIdAsync` — Get detailed info for a specific scenario
+- [x] `GetAllCharactersAsync` — List all player characters
+- [x] `GetCharacterByIdAsync` — Get a player character's current status
+- [ ] `CreateCharacterAsync` — Create a new player character (CoC7 rules supported)
+- [x] `CreateCharacterFromTemplateIdAsync` — 
+- [x] `UpdateCharacterAsync` — Update a player character's information
+- [x] `UpdateCharacterAttributeAsync` — Update a specific attribute of a player character
+- [x] `DeleteCharacterAsync` — Delete a player character by ID
+- [x] `GetAvailableCharacterTemplates` — List available character templates for creation
 
 ### Dice & Check Tools
-- `SkillCheckAsync` — Perform a skill check for a character
-- `AttributeCheckAsync` — Perform an attribute check for a character
-- `SanityCheck` — Perform a sanity check for a character
-- `SavingThrowAsync` — Perform a saving throw for a character
-- `CalculateDamageAsync` — Calculate damage for an attack
-- `RollDiceAsync` — Roll dice using standard notation (e.g., 1d100)
+- [x] `SkillCheckAsync` — Perform a skill check for a character
+- [x] `AttributeCheckAsync` — Perform an attribute check for a character
+- [x] `SanityCheck` — Perform a sanity check for a character
+- [x] `SavingThrowAsync` — Perform a saving throw for a character
+- [x] `CalculateDamageAsync` — Calculate damage for an attack
+- [x] `RollDiceAsync` — Roll dice using standard notation (e.g., 1d100)
 
 ### AI Keeper Assistant Tools
-- `GenerateSceneDescriptionAsync` — Generate a vivid scene description (NPCs, items, actions)
-- `GenerateNpcDialogueAsync` — Generate dynamic NPC dialogue suggestions
-- `SuggestChecksAndDifficultiesAsync` — Suggest checks and difficulty levels for the current scene
-- `GenerateRandomEventAsync` — Generate a random event for the scene or scenario
-- `GetGameProgressSuggestionsAsync` — Suggest next steps based on game progress
+- [x] `GenerateSceneDescriptionAsync` — Generate a vivid scene description (NPCs, items, actions)
+- [x] `GenerateNpcDialogueAsync` — Generate dynamic NPC dialogue suggestions
+- [x] `SuggestChecksAndDifficultiesAsync` — Suggest checks and difficulty levels for the current scene
+- [x] `GenerateRandomEventAsync` — Generate a random event for the scene or scenario
+- [x] `GetGameProgressSuggestionsAsync` — Suggest next steps based on game progress
 
 *All tools are designed for seamless AI integration through the MCP protocol and are accessible to both AI and human Keepers.*
 

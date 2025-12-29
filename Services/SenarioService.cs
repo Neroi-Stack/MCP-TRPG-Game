@@ -1,5 +1,4 @@
 using MCPTRPGGame.Data;
-using MCPTRPGGame.Data.Models;
 using MCPTRPGGame.DTO;
 using MCPTRPGGame.Services.Interface;
 using Microsoft.EntityFrameworkCore;

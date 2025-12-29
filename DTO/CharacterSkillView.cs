@@ -8,6 +8,7 @@ namespace MCPTRPGGame.DTO
 		public int CharacterId { get; set; }
 		public int SkillId { get; set; }
 		public int Proficiency { get; set; }
+		public SkillView? Skill { get; set; }
 
 		public static implicit operator CharacterSkillView?(CharacterSkill? character)
 		{
@@ -16,7 +17,13 @@ namespace MCPTRPGGame.DTO
 			{
 				CharacterId = character.CharacterId,
 				SkillId = character.SkillId,
-				Proficiency = character.Proficiency
+				Proficiency = character.Proficiency,
+				Skill = new SkillView
+				{
+					Id = character.Skill!.Id,
+					Name = character.Skill.Name,
+					Description = character.Skill.Description
+				}
 			};
 		}
 	}
