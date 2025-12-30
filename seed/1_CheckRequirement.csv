@@ -1,4 +1,0 @@
-Id,SkillId,AttributeId,DiceExpression,Difficulty,Description,KeeperNotes,IsActive,DisplayOrder,CreatedAt,UpdatedAt
-1,36,,1d100,Normal,發現新鮮腳印與異常踏痕,可使用細緻查閱以找到方向線索。,True,1,2025-12-27,2025-12-27
-2,29,,1d100,Hard,辨識牆上儀式痕跡,若成功可得召喚儀式相關線索。,True,2,2025-12-27,2025-12-27
-3,23,,1d100,Easy,聆聽地下室低語和聲音來源,成功可定位祭壇或敵方位置。,True,3,2025-12-27,2025-12-27

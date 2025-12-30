@@ -1,9 +1,16 @@
 {
 	"mcpServers": {
 		"trpg-mcp": {
+			"type": "stdio",
 			"command": "dotnet",
-			"args": [ "run", "--stdio" ],
-			"type": "stdio"
+			"args": [
+				"run" ,
+				"--project",
+				"src/ToolBox/ToolBox.csproj",
+				"--framework",
+				"net9.0",
+				"--stdio"
+			]
 		}
 	}
 }

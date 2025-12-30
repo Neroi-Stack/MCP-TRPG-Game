@@ -62,16 +62,23 @@ https://github.com/user-attachments/assets/237294ee-6db8-4e5e-8d49-f028fc6b50d7
 	{
 		"mcpServers": {
 			"trpg-mcp": {
+				"type": "stdio",
 				"command": "dotnet",
-				"args": [ "run", "--stdio" ],
-				"type": "stdio"
+				"args": [
+					"run" ,
+					"--project",
+					"src/ToolBox/ToolBox.csproj",
+					"--framework",
+					"net9.0",
+					"--stdio"
+				]
 			}
 		}
 	}
 	```
 	if you want to use http mode
 	```bash
-	dotnet run
+	dotnet run --project src/ToolBox/ToolBox.csproj --framework net9.0 -- --stdio
 	```
 	```json
 	{
@@ -102,7 +109,11 @@ https://github.com/user-attachments/assets/237294ee-6db8-4e5e-8d49-f028fc6b50d7
 				"command": "dotnet",
 				"args": [
 					"run" ,
-					"--stdio",
+					"--project",
+					"src/ToolBox/ToolBox.csproj",
+					"--framework",
+					"net9.0",
+					"--stdio"
 				]
 			}
 		}
@@ -111,7 +122,7 @@ https://github.com/user-attachments/assets/237294ee-6db8-4e5e-8d49-f028fc6b50d7
 
 	if you want to use http mode
 	```bash
-	dotnet run
+	dotnet run --project src/ToolBox/ToolBox.csproj --framework net9.0
 	```
 	```json
 	{
@@ -174,12 +185,12 @@ The server provides 30+ specialized MCP tools for comprehensive TRPG management:
 
 ## Directory Structure
 
-- `Tools/` — Tool controllers
-- `DTO/` — Data models
-- `Request/` — Request Data models
-- `Services/` — Business logic and game services
-- `Data/` — Database context
-- `seed/` — Initial CSV data files
+src
+├── Common (shared models and utilities)
+│   └──  seed (initial CSV data)
+├── Modules
+│   └── Game.Service (module for game logic)
+└── ToolBox (tools for seeding and managing data)
 
 ## Contact
 

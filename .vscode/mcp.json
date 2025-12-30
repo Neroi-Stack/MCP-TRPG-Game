@@ -5,7 +5,11 @@
 			"command": "dotnet",
 			"args": [
 				"run" ,
-				"--stdio",
+				"--project",
+				"src/ToolBox/ToolBox.csproj",
+				"--framework",
+				"net9.0",
+				"--stdio"
 			]
 		}
 	},
