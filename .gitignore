@@ -482,3 +482,9 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# Local SQLite database (local dev)
+/trpg.db
+/trpg.db-wal
+/trpg.db-shm
+*.db
