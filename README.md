@@ -1,5 +1,5 @@
 # MCP-TRPG-Game Server
-![GitHub Release](https://img.shields.io/github/v/release/tse-wei-chen/MCP-TRPG-Game) ![GitHub License](https://img.shields.io/github/license/tse-wei-chen/MCP-TRPG-Game) 
+![GitHub Release](https://img.shields.io/github/v/release/tse-wei-chen/MCP-TRPG-Game) ![GitHub License](https://img.shields.io/github/license/tse-wei-chen/MCP-TRPG-Game) [![.NET](https://github.com/tse-wei-chen/MCP-TRPG-Game/actions/workflows/dotnet.yml/badge.svg?branch=main)](https://github.com/tse-wei-chen/MCP-TRPG-Game/actions/workflows/dotnet.yml)
 
 An advanced **MCP (Model Context Protocol) powered** TRPG (Tabletop Role-Playing Game) server designed for automated, AI-driven adventures. This project leverages the revolutionary **MCP technology** to seamlessly connect Large Language Models (LLMs) with game mechanics, creating an intelligent AI Keeper (KP) that can dynamically lead, narrate, and manage immersive gaming sessions.
 
