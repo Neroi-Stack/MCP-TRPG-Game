@@ -4,7 +4,10 @@
 			"type": "stdio",
 			"command": "dotnet",
 			"args": [
-				"run"
+				"run" ,
+				"--project",
+				"src/ToolBox/ToolBox.csproj",
+				"--stdio"
 			]
 		}
 	},
