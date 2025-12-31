@@ -488,3 +488,5 @@ $RECYCLE.BIN/
 /trpg.db-wal
 /trpg.db-shm
 *.db
+
+/coveragereport
