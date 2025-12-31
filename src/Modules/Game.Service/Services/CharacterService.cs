@@ -1,7 +1,7 @@
 using Game.Service.Request;
 using Game.Service.Data;
 using Game.Service.Data.Models;
-using Game.Service.View.DTO;
+using Game.Service.View;
 using Game.Service.Interface;
 using Microsoft.EntityFrameworkCore;
 

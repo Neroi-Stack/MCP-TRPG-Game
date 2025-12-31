@@ -1,7 +1,7 @@
 
 using Game.Service.Data.Models;
 
-namespace Game.Service.View.DTO
+namespace Game.Service.View
 {
 	public class CharacterAttributeView
 	{

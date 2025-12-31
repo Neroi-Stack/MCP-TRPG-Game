@@ -1,4 +1,4 @@
-using Game.Service.View.DTO;
+using Game.Service.View;
 
 namespace Game.Service.Interface;
 

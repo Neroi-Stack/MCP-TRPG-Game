@@ -1,5 +1,5 @@
 using Game.Service.Request;
-using Game.Service.View.DTO;
+using Game.Service.View;
 
 namespace Game.Service.Interface;
 public interface ICharacterService
