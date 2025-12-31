@@ -5,7 +5,7 @@ using System.Text.Json;
 using Game.Service.Interface;
 using Game.Service.Request;
 
-namespace ToolBox.GameTools.Tools;
+namespace ToolBox.Tools.GameTools;
 
 public static partial class TrpgTools
 {
@@ -94,9 +94,6 @@ public static partial class TrpgTools
 		using var scope = _serviceProvider.CreateScope();
 		var characterService = scope.ServiceProvider.GetRequiredService<ICharacterService>();
 		var characters = await characterService.GetAllCharactersAsync(true);
-		return @$"
-			🎭 **Available Character Templates**
-			{JsonSerializer.Serialize(characters)}
-		";
+		return JsonSerializer.Serialize(characters);
 	}
 }

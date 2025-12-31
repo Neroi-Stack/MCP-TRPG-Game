@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Text.Json;
 using Game.Service.Interface;
 
-namespace ToolBox.GameTools.Tools;
+namespace ToolBox.Tools.GameTools;
 
 public static partial class TrpgTools
 {

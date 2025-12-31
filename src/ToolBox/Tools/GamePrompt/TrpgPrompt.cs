@@ -1,8 +1,8 @@
 using ModelContextProtocol.Server;
 
-namespace ToolBox.Tools.GameTools;
-[McpServerToolType]
-public static partial class TrpgTools
+namespace ToolBox.Tools.GamePrompt;
+[McpServerPromptType]
+public static partial class TrpgPrompt
 {
     private static IServiceProvider? _serviceProvider;
 

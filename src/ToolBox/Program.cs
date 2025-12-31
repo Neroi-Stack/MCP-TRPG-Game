@@ -3,7 +3,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Game.Service.Data;
-using ToolBox.GameTools.Tools;
+using ToolBox.Tools.GameTools;
 using ModelContextProtocol.Protocol;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Builder;

@@ -19,15 +19,76 @@ public class CharacterService : ICharacterService
 		_context = context;
 	}
 
-	public async Task<List<PlayerCharacterView?>> GetAllCharactersAsync(bool isTemplate = false, CancellationToken cancellationToken = default)
+	public async Task<List<PlayerCharacterView>> GetAllCharactersAsync(bool isTemplate = false, CancellationToken cancellationToken = default)
 	{
 		return await _context.PlayerCharacters
-			.AsNoTracking()
 			.Include(p => p.CharacterAttributes)
+				.ThenInclude(a => a.Attribute)
 			.Include(p => p.CharacterSkills)
+				.ThenInclude(s => s.Skill)
 			.Include(p => p.CharacterItems)
-			.Where(p => p.IsTemplate == isTemplate)
-			.Select(p => (PlayerCharacterView?)p)
+				.ThenInclude(i => i.Item)
+			.Select(p => new PlayerCharacterView
+			{
+				Id = p.Id,
+				Name = p.Name,
+				Gender = p.Gender,
+				Age = p.Age,
+				PhysicalDesc = p.PhysicalDesc,
+				Biography = p.Biography,
+				StatusEffects = p.StatusEffects,
+				Notes = p.Notes,
+				IsDead = p.IsDead,
+				LastKnownSceneId = p.LastKnownSceneId,
+				IsTemplate = p.IsTemplate,
+				IsActive = p.IsActive,
+				CreatedAt =  p.CreatedAt,
+				UpdatedAt = p.UpdatedAt,
+				CharacterAttributes = p.CharacterAttributes
+					.Select(a => (CharacterAttributeView?)new CharacterAttributeView
+					{
+						CharacterId = a.CharacterId,
+						AttributeId = a.AttributeId,
+						MaxValue = a.MaxValue,
+						CurrentValue = a.CurrentValue,
+						Attribute = new Attributes
+						{
+							Id = a.Attribute!.Id,
+							Name = a.Attribute.Name,
+							Description = a.Attribute.Description
+						}
+					})
+					.ToList(),
+				CharacterSkills = p.CharacterSkills
+					.Select(s => (CharacterSkillView?)new CharacterSkillView
+					{
+						CharacterId = s.CharacterId,
+						SkillId = s.SkillId,
+						Proficiency = s.Proficiency,
+						Skill = new SkillView
+						{
+							Id = s.Skill!.Id,
+							Name = s.Skill.Name,
+							Description = s.Skill.Description
+						}
+					})
+					.ToList(),
+				CharacterItems = p.CharacterItems
+					.Select(i => (CharacterItemView?)new CharacterItemView
+					{
+						CharacterId = i.CharacterId,
+						ItemId = i.ItemId,
+						Quantity = i.Quantity,
+						Item = new ItemView
+						{
+							Id = i.Item!.Id,
+							Name = i.Item.Name,
+							Description = i.Item.Description
+						}
+					})
+					.ToList()
+
+			})
 			.ToListAsync(cancellationToken);
 	}
 
