@@ -10,7 +10,6 @@ namespace Game.Service.Data.Models
 		public string Biography { get; set; } = string.Empty;
 		public string StatusEffects { get; set; } = string.Empty;
 		public string Notes { get; set; } = string.Empty;
-		public int? CharacterTemplateId { get; set; }
 		public bool IsDead { get; set; }
 		public int? LastKnownSceneId { get; set; }
 		public bool IsTemplate { get; set; }

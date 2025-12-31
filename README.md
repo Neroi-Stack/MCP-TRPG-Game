@@ -35,8 +35,8 @@ https://github.com/user-attachments/assets/237294ee-6db8-4e5e-8d49-f028fc6b50d7
 ## Getting Started
 
 ### Prerequisites
-1. **Install .NET 9.0 SDK**
-	 - Download and install [.NET 9.0 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
+1. **Install .NET 10.0 SDK**
+	 - Download and install [.NET 10.0 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
 
 2. **MCP-Compatible AI Client** (Optional for enhanced AI integration)
 	- Cursor, Claude Desktop, VS Code with MCP extensions, or other MCP-enabled clients
@@ -69,8 +69,6 @@ https://github.com/user-attachments/assets/237294ee-6db8-4e5e-8d49-f028fc6b50d7
 					"run" ,
 					"--project",
 					"src/ToolBox/ToolBox.csproj",
-					"--framework",
-					"net9.0",
 					"--stdio"
 				]
 			}
@@ -79,7 +77,7 @@ https://github.com/user-attachments/assets/237294ee-6db8-4e5e-8d49-f028fc6b50d7
 	```
 	if you want to use http mode
 	```bash
-	dotnet run --project src/ToolBox/ToolBox.csproj --framework net9.0 -- --stdio
+	dotnet run --project src/ToolBox/ToolBox.csproj --stdio
 	```
 	```json
 	{
@@ -112,8 +110,6 @@ https://github.com/user-attachments/assets/237294ee-6db8-4e5e-8d49-f028fc6b50d7
 					"run" ,
 					"--project",
 					"src/ToolBox/ToolBox.csproj",
-					"--framework",
-					"net9.0",
 					"--stdio"
 				]
 			}
@@ -123,7 +119,7 @@ https://github.com/user-attachments/assets/237294ee-6db8-4e5e-8d49-f028fc6b50d7
 
 	if you want to use http mode
 	```bash
-	dotnet run --project src/ToolBox/ToolBox.csproj --framework net9.0
+	dotnet run --project src/ToolBox/ToolBox.csproj
 	```
 	```json
 	{

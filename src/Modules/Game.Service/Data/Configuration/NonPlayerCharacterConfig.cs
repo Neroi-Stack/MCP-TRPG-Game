@@ -20,7 +20,6 @@ namespace Game.Service.Data.Configuration
 			builder.Property(npc => npc.Role).HasColumnName("Role").IsRequired();
 			builder.Property(npc => npc.StatusEffects).HasColumnName("StatusEffects").IsRequired();
 			builder.Property(npc => npc.Notes).HasColumnName("Notes").IsRequired();
-			builder.Property(npc => npc.CharacterTemplateId).HasColumnName("CharacterTemplateId").IsRequired(false);
 			builder.Property(npc => npc.IsHostile).HasColumnName("IsHostile").IsRequired();
 			builder.Property(npc => npc.LastKnownSceneId).HasColumnName("LastKnownSceneId").IsRequired(false);
 			builder.Property(npc => npc.IsActive).HasColumnName("IsActive").IsRequired();

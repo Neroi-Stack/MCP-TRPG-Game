@@ -1,6 +1,6 @@
 using Game.Service.Data.Models;
 
-namespace MCPTRPGGame.DTO
+namespace Game.Service.View.DTO
 {
 	public class SkillView
 	{

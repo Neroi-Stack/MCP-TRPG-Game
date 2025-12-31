@@ -1,6 +1,6 @@
 using Game.Service.Data.Models;
 
-namespace MCPTRPGGame.DTO
+namespace Game.Service.View.DTO
 {
 	public class PlayerCharacterView
 	{
@@ -12,7 +12,6 @@ namespace MCPTRPGGame.DTO
 		public string Biography { get; set; } = string.Empty;
 		public string StatusEffects { get; set; } = string.Empty;
 		public string Notes { get; set; } = string.Empty;
-		public int? CharacterTemplateId { get; set; }
 		public bool IsDead { get; set; }
 		public int? LastKnownSceneId { get; set; }
 		public bool IsTemplate { get; set; }
@@ -36,7 +35,6 @@ namespace MCPTRPGGame.DTO
 				Biography = character.Biography,
 				StatusEffects = character.StatusEffects,
 				Notes = character.Notes,
-				CharacterTemplateId = character.CharacterTemplateId,
 				IsDead = character.IsDead,
 				LastKnownSceneId = character.LastKnownSceneId,
 				IsTemplate = character.IsTemplate,

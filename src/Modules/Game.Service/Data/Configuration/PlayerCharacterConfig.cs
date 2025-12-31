@@ -19,7 +19,6 @@ namespace Game.Service.Data.Configuration
 			builder.Property(pc => pc.Biography).HasColumnName("Biography").IsRequired();
 			builder.Property(pc => pc.StatusEffects).HasColumnName("StatusEffects").IsRequired();
 			builder.Property(pc => pc.Notes).HasColumnName("Notes").IsRequired();
-			builder.Property(pc => pc.CharacterTemplateId).HasColumnName("CharacterTemplateId").IsRequired(false);
 			builder.Property(pc => pc.IsDead).HasColumnName("IsDead").IsRequired();
 			builder.Property(pc => pc.LastKnownSceneId).HasColumnName("LastKnownSceneId").IsRequired(false);
 			builder.Property(pc => pc.IsTemplate).HasColumnName("IsTemplate").IsRequired();

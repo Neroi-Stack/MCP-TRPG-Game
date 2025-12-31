@@ -7,8 +7,6 @@
 				"run" ,
 				"--project",
 				"src/ToolBox/ToolBox.csproj",
-				"--framework",
-				"net9.0",
 				"--stdio"
 			]
 		}

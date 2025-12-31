@@ -19,8 +19,6 @@ namespace Game.Service.Request
 		public string StatusEffects { get; set; } = string.Empty;
 		[Description("notes about the character")]
 		public string Notes { get; set; } = string.Empty;
-		[Description("identifier of the character template")]
-		public int? CharacterTemplateId { get; set; }
 		[Description("indicates if the character is dead")]
 		public bool IsDead { get; set; }
 		[Description("last known scene ID of the character")]

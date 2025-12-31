@@ -1,4 +1,4 @@
-using MCPTRPGGame.DTO;
+using Game.Service.View.DTO;
 
 namespace Game.Service.Interface;
 

@@ -1,7 +1,7 @@
 using Game.Service.Request;
 using Game.Service.Data;
 using Game.Service.Data.Models;
-using MCPTRPGGame.DTO;
+using Game.Service.View.DTO;
 using Game.Service.Interface;
 using Microsoft.EntityFrameworkCore;
 
@@ -51,7 +51,6 @@ public class CharacterService : ICharacterService
 				Biography = p.Biography,
 				StatusEffects = p.StatusEffects,
 				Notes = p.Notes,
-				CharacterTemplateId = p.CharacterTemplateId,
 				IsDead = p.IsDead,
 				LastKnownSceneId = p.LastKnownSceneId,
 				IsTemplate = p.IsTemplate,
@@ -123,7 +122,6 @@ public class CharacterService : ICharacterService
 			Biography = template.Biography,
 			StatusEffects = template.StatusEffects,
 			Notes = template.Notes,
-			CharacterTemplateId = template.Id,
 			IsDead = template.IsDead,
 			LastKnownSceneId = template.LastKnownSceneId,
 			IsTemplate = false,
@@ -197,7 +195,6 @@ public class CharacterService : ICharacterService
 			Biography = character.Biography,
 			StatusEffects = character.StatusEffects,
 			Notes = character.Notes,
-			CharacterTemplateId = character.CharacterTemplateId,
 			IsDead = character.IsDead,
 			LastKnownSceneId = character.LastKnownSceneId,
 			IsTemplate = character.IsTemplate,
@@ -222,7 +219,6 @@ public class CharacterService : ICharacterService
 		existing.Biography = character.Biography;
 		existing.StatusEffects = character.StatusEffects;
 		existing.Notes = character.Notes;
-		existing.CharacterTemplateId = character.CharacterTemplateId;
 		existing.IsDead = character.IsDead;
 		existing.LastKnownSceneId = character.LastKnownSceneId;
 		existing.IsTemplate = character.IsTemplate;
