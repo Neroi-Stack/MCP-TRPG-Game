@@ -181,14 +181,14 @@ The server provides 30+ specialized MCP tools for comprehensive TRPG management:
 *All tools are designed for seamless AI integration through the MCP protocol and are accessible to both AI and human Keepers.*
 
 ## Directory Structure
-
+```
 src
 ├── Common (shared models and utilities)
 │   └──  seed (initial CSV data)
 ├── Modules
 │   └── Game.Service (module for game logic)
 └── ToolBox (tools for seeding and managing data)
-
+```
 ## Contact
 
 For questions or suggestions, please contact the project maintainer.
