@@ -20,12 +20,11 @@ public class CheckService : ICheckService
 	public async Task<int> RollDiceAsync(string diceExpression)
 	{
 		var parts = diceExpression.ToLower().Split('d');
-		if (parts.Length != 2) throw new ArgumentException("Invalid dice expression.");
-
-		int numDice = int.Parse(parts[0]);
-		int numSides = int.Parse(parts[1]);
-
-		var random = new Random();
+		if (parts.Length != 2)
+			throw new ArgumentException("Invalid dice expression.");
+        if (!int.TryParse(parts[0], out int numDice) || !int.TryParse(parts[1], out int numSides))
+            throw new ArgumentException("Invalid dice expression.");
+        var random = new Random();
 		int total = 0;
 		for (int i = 0; i < numDice; i++)
 		{
