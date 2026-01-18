@@ -14,6 +14,8 @@ using Game.Service.Interface;
 using Game.Service.Services;
 using Common.Interface;
 using Common.Services;
+using ToolBox.Tools;
+using ToolBox.Middleware;
 
 // Decide mode by command-line: pass --stdio to run stdio transport, otherwise http
 var mode = args.Contains("--stdio") ? "stdio" : "http";
@@ -31,12 +33,14 @@ if (mode == "http")
 
 	RegisterCommonServices(builder.Services, builder.Configuration);
 	builder.Services.AddScoped<McpContextMiddleware>();
+	builder.Services.AddScoped<McpResponseFlattenerMiddleware>();
 	builder.Services.AddHttpContextAccessor();
 	builder.Services.AddMcpServer(_ => { }).WithToolsFromAssembly().WithHttpTransport();
 
 	var app = builder.Build();
 
 	app.UseMiddleware<McpContextMiddleware>();
+	app.UseMiddleware<McpResponseFlattenerMiddleware>();
 	app.MapMcp("/mcp");
 	InitializeAndSeed(app.Services);
 
@@ -53,7 +57,8 @@ else
 
 	RegisterCommonServices(builder.Services, builder.Configuration);
 
-	// STDIO-only services
+	Console.SetOut(new StdioMcpResponseFlattener(Console.Out));
+
 	builder.Services
 		.AddMcpServer()
 		.WithStdioServerTransport()
@@ -102,24 +107,5 @@ static void InitializeAndSeed(IServiceProvider services)
 		{
 			Console.WriteLine($"[SeedDataLoader] {ex.Message}");
 		}
-	}
-}
-
-
-// http
-public class McpContextMiddleware : IMiddleware
-{
-	public async Task InvokeAsync(HttpContext context, RequestDelegate next)
-	{
-		if (context.Request.HasJsonContentType())
-		{
-			context.Request.EnableBuffering();
-
-			var mcpRequest = await JsonSerializer.DeserializeAsync<JsonRpcRequest>(context.Request.Body, options: null, context.RequestAborted);
-
-			context.Request.Body.Seek(0, SeekOrigin.Begin);
-		}
-
-		await next.Invoke(context);
 	}
 }

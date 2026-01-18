@@ -12,9 +12,7 @@
 			"args": [
 				"run",
 				"--project",
-				"src/ToolBox/ToolBox.csproj",
-				"--framework",
-				"net9.0"
+				"src/ToolBox/ToolBox.csproj"
 			],
 			"cwd": "${workspaceFolder}",
 			"stopAtEntry": false,

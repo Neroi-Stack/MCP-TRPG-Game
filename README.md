@@ -77,17 +77,14 @@ https://github.com/user-attachments/assets/237294ee-6db8-4e5e-8d49-f028fc6b50d7
 	```
 	if you want to use http mode
 	```bash
-	dotnet run --project src/ToolBox/ToolBox.csproj --stdio
+	dotnet run --project src/ToolBox/ToolBox.csproj
 	```
 	```json
 	{
 		"mcpServers": {
 			"trpg-mcp": {
 				"type": "http",
-				"url": "http://localhost:5000/mcp",
-				"env": {
-					"ASPNETCORE_ENVIRONMENT": "Local"
-				}
+				"url": "http://localhost:5000/mcp"
 			}
 		}
 	}
@@ -126,10 +123,7 @@ https://github.com/user-attachments/assets/237294ee-6db8-4e5e-8d49-f028fc6b50d7
 		"servers": {
 			"trpg-mcp": {
 				"type": "http",
-				"url": "http://localhost:5000/mcp",
-				"env": {
-					"ASPNETCORE_ENVIRONMENT": "Local"
-				}
+				"url": "http://localhost:5000/mcp"
 			}
 		}
 	}
