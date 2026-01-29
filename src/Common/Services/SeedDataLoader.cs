@@ -8,20 +8,14 @@ namespace Common.Services;
 /// <summary>
 /// 自動載入 seed 資料夾所有 CSV 檔案並插入資料庫
 /// </summary>
-public class SeedDataLoader : ISeedDataLoader
+public class SeedDataLoader(DbContext context) : ISeedDataLoader
 {
-	private readonly DbContext _context;
 	private readonly string _seedFolder = Path.Combine(AppContext.BaseDirectory, "seed");
-
-	public SeedDataLoader(DbContext context)
-	{
-		_context = context;
-	}
 
 	public void LoadAllSeedData()
 	{
 		if (!Directory.Exists(_seedFolder)) return;
-		var dbContextType = _context.GetType();
+		var dbContextType = context.GetType();
 		var modelNamespace = typeof(SeedDataLoader).Namespace?.Replace("Services", "Data.Models");
 		// Collect files and sort by leading numeric prefix if present (e.g. 0_, 1_).
 		// Files with an "n_" or "n-" prefix are intended as join/relationship data
@@ -58,7 +52,7 @@ public class SeedDataLoader : ISeedDataLoader
 			{
 				try
 				{
-					var conn = _context.Database.GetDbConnection();
+					var conn = context.Database.GetDbConnection();
 					conn.Open();
 					using var cmd = conn.CreateCommand();
 					cmd.CommandText = "PRAGMA foreign_key_list('CharacterAttribute');";
@@ -83,7 +77,7 @@ public class SeedDataLoader : ISeedDataLoader
 					p.PropertyType.GetGenericTypeDefinition() == typeof(DbSet<>) &&
 					p.PropertyType.GetGenericArguments()[0] == modelType);
 			if (dbSetProp == null) continue;
-			var dbSet = dbSetProp.GetValue(_context);
+			var dbSet = dbSetProp.GetValue(context);
 			if (dbSet == null) continue;
 			var queryable = dbSet as IQueryable;
 			if (queryable != null && queryable.Cast<object>().Any())
@@ -175,8 +169,8 @@ public class SeedDataLoader : ISeedDataLoader
 					if (addRangeMethod != null)
 					{
 						addRangeMethod.Invoke(dbSet, new object[] { typedArray });
-						_context.SaveChanges();
-						_context.ChangeTracker.Clear();
+						context.SaveChanges();
+						context.ChangeTracker.Clear();
 						Console.WriteLine($"成功載入 {records.Count} 筆 {fileName} 資料");
 					}
 					else
@@ -187,7 +181,7 @@ public class SeedDataLoader : ISeedDataLoader
 				catch (Exception ex)
 				{
 					Console.WriteLine($"載入 {fileName} 資料時發生錯誤: {ex.Message}");
-					_context.ChangeTracker.Clear();
+					context.ChangeTracker.Clear();
 				}
 			}
 		}
