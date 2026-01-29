@@ -8,15 +8,8 @@ namespace Game.Service.Services;
 /// <summary>
 /// 檢定管理服務
 /// </summary>
-public class CheckService : ICheckService
+public class CheckService(TrpgDbContext context) : ICheckService
 {
-	private readonly TrpgDbContext _context;
-
-	public CheckService(TrpgDbContext context)
-	{
-		_context = context;
-	}
-
 	public async Task<int> RollDiceAsync(string diceExpression)
 	{
 		var parts = diceExpression.ToLower().Split('d');
@@ -36,7 +29,7 @@ public class CheckService : ICheckService
 	public async Task<string> SanityCheckAsync(int characterId, string rollExpression)
 	{
 		var roll = await RollDiceAsync(rollExpression);
-		var attribute = await _context.CharacterAttributes
+		var attribute = await context.CharacterAttributes
 			.Include(a => a.Attribute)
 			.FirstOrDefaultAsync(a => a.CharacterId == characterId && a.Attribute != null && a.Attribute.Name.ToLower().Contains("san"));
 		if (attribute == null) return $"No sanity attribute found for character {characterId}. Roll: {roll}";
@@ -46,7 +39,7 @@ public class CheckService : ICheckService
 
 	public async Task<string> AttributeCheckAsync(int characterId, string attributeIdentifier, string rollExpression)
 	{
-		var attributeQuery = _context.CharacterAttributes.Include(a => a.Attribute).Where(a => a.CharacterId == characterId);
+		var attributeQuery = context.CharacterAttributes.Include(a => a.Attribute).Where(a => a.CharacterId == characterId);
 		CharacterAttribute? attribute = null;
 		if (int.TryParse(attributeIdentifier, out var attrId))
 		{
@@ -65,7 +58,7 @@ public class CheckService : ICheckService
 
 	public async Task<string> SkillCheckAsync(int characterId, string skillIdentifier, string rollExpression)
 	{
-		var skillQuery = _context.CharacterSkills.Include(s => s.Skill).Where(s => s.CharacterId == characterId);
+		var skillQuery = context.CharacterSkills.Include(s => s.Skill).Where(s => s.CharacterId == characterId);
 		CharacterSkill? cskill = null;
 		if (int.TryParse(skillIdentifier, out var skillId))
 		{
@@ -94,12 +87,12 @@ public class CheckService : ICheckService
 		Item? item = null;
 		if (int.TryParse(weaponIdentifier, out var itemId))
 		{
-			item = await _context.Items.FindAsync(itemId);
+			item = await context.Items.FindAsync(itemId);
 		}
 		else
 		{
 			var name = weaponIdentifier.ToLower();
-			item = await _context.Items.FirstOrDefaultAsync(i => i.Name.ToLower().Contains(name));
+			item = await context.Items.FirstOrDefaultAsync(i => i.Name.ToLower().Contains(name));
 		}
 		var diceExpr = rollExpression;
 		if (item != null && !string.IsNullOrWhiteSpace(item.Stats))
@@ -113,7 +106,7 @@ public class CheckService : ICheckService
 
 	public async Task<string> AutoRollPlayerAttributeAsync(int characterId)
 	{
-		var attributeList = await _context.Attributes.ToListAsync();
+		var attributeList = await context.Attributes.ToListAsync();
 
 		var characterAttributes = new List<CharacterAttribute>();
 		int powValue = 0;
@@ -148,8 +141,8 @@ public class CheckService : ICheckService
 				CurrentValue = rollResult
 			});
 		}
-		_context.CharacterAttributes.AddRange(characterAttributes);
-		await _context.SaveChangesAsync();
+		context.CharacterAttributes.AddRange(characterAttributes);
+		await context.SaveChangesAsync();
 
 		return "Attributes rolled and assigned successfully.";
 	}
